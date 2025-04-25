@@ -4,10 +4,10 @@ Instructions
 2. Change column header from PM2.5 to PM25
 
 3. Get PEK.xlsx, PEK_home.xlsx and AQMS.xlsx from Sapiens (Remember to select fill discontinuum and μg/m3 as unit!)
-4. Convert .xlsx to .csv with online excel to csv converter https://convertio.co/xls-csv/
+4. Save copy of .xlsx as .csv format
 5. Change column headers to PM25, PM10, O3, NO2 (to avoid special symbols . [] μ)
 
-6. Search for "PEK25" x5 (bring out) and "PEK09" x5 (at home) in main_v4 to replace with the number of your PEKs
+6. Search for "PEK25" (bring out) and "PEK09" (at home) in main_v4 to replace with the number of your PEKs
 
 7. Run main_v4, you will need to wait for 1-2 mins
 
