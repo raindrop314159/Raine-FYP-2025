@@ -1,6 +1,7 @@
 % Author: Raine Chang
-% Edited by Toby Yip on 16 Apr 2025
 % Last updated: Saturday 12 Apr 2025 
+% Edited by Toby Yip on 16 Apr 2025
+
 
 % Initialize Table
 SyntheticDiary = readtable('OfficeWorker_2months.csv');
