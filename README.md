@@ -1,4 +1,6 @@
 # 3.4 Analysis of Exposure Variations based on TCS Groups and MEs (Appendices II-IV)
+Download the full package from Exposure-Variation-Analysis.zip!
+
 1. Use Gen_2_months to convert 1 day of data into 2 months repeated data
 	-> the data are saved in OfficeWorker_2months.csv
 
