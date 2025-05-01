@@ -1,5 +1,7 @@
 # Appendix I – MATLAB code to generate daily plots for January’s sampling
 
+Download Appendix-I.zip for the whole package!
+
 Instructions on how to run main_v4
 
 1. Get Praise.csv from SQLITE
