@@ -1,6 +1,6 @@
 %Author: Raine Chang
 %Edited by Toby Yip on 16 Apr 2025
-%Last updated: Saturday 16 Apr 2025
+%Last updated: Saturday 1 May 2025
 
 % Initialize data generated from API
 Praise = readtable('SimulationOutput.csv');
@@ -10,7 +10,7 @@ dateInput = ['20240903'];
 num_dateInput = str2double(dateInput);
 
 % Specify number of days SimulationOutput contains for average calculation
-no_of_days = 58;
+no_of_days = 61;
 
 % Retrieve AQMS data
 data_path ='AQMS.csv';
@@ -28,6 +28,7 @@ ME_Variable = zeros(3,1);
 %Initialize Praise variables
 IO_in_hour=zeros(8,24);
 daily_IO_exposure=zeros(8,1);
+total_IO_exposure=zeros(8,1);
 PM25_in_hour=zeros(24,1);
 PM10_in_hour=zeros(24,1);
 O3_in_hour=zeros(24,1);
@@ -169,6 +170,7 @@ for i = 1:height(Praise)
     
     Total_exposure = Total_exposure + exposure_PM10 + exposure_NO2 + exposure_O3 ;
     Total_outdoor_exposure = Total_outdoor_exposure + outdoor_exposure_PM10 + outdoor_exposure_NO2 + outdoor_exposure_O3;
+    total_IO_exposure(IO)=total_IO_exposure(IO)+exposure;
 
     % Plot data of 1-DAY ONLY
     if (str2double(year) * 10000 + str2double(month) * 100 + str2double(day)) == num_dateInput
@@ -201,9 +203,9 @@ end
         
         % Add legend for bar chart
         xticks(0:23);
-        xlabel('Hour');
-        ylabel('%AR');
-        title('Daily Exposure Summary');
+        xlabel('Time(Hour)');
+        ylabel('Exposure(%AR)');
+        title('Daily Exposure Report');
         colors = [
             0.8, 0.2, 0.2;  % Home
             0.25, 0.88, 0.82;  % School
@@ -249,7 +251,7 @@ end
             ['Bus and Minibus: ', num2str(round(daily_IO_exposure(8),3,'significant'))], 
             % ['PEK25: ', num2str(round(sum(PEK_hourly_exposure),3,'significant'))], 
             % ['PEK09: ', num2str(round(sum(PEKhome_hourly_exposure),3,'significant'))], 
-            ['Tsuen Wan AQMS: ', num2str(round(sum(AQMS_hourly_exposure),3,'significant'))],
+            ['Kwun Tong AQMS: ', num2str(round(sum(AQMS_hourly_exposure),3,'significant'))],
             ['PRAISE Outdoor:', num2str(round(sum(Outdoor_in_hour),3,'significant'))]
         };
         legend(legendLabels, 'Location', 'best');
@@ -261,11 +263,11 @@ end
         plot(x1, transpose(Praise_in_hour), 'r-', 'DisplayName', ['PRAISE: ', num2str(round(sum(daily_IO_exposure),3,'significant'))],'LineWidth', 2);
         % plot(x1, PEK_hourly_exposure, 'b-', 'DisplayName', ['PEK25: ', num2str(round(sum(PEK_hourly_exposure),3,'significant'))],'LineWidth', 2);
         % plot(x1, PEKhome_hourly_exposure, 'Color', [0.678, 0.847, 0.902], 'LineStyle', '--', 'DisplayName', 'PEK09', 'LineWidth', 2);
-        plot(x1, AQMS_hourly_exposure, 'g-', 'DisplayName', 'Tsuen Wan AQMS','LineWidth', 2);
+        plot(x1, AQMS_hourly_exposure, 'g-', 'DisplayName', 'Kwun Tong AQMS','LineWidth', 2);
         plot(x1, Outdoor_in_hour,'k-','DisplayName', 'PRAISE Outdoor','LineWidth', 2);
         hold off;
-        xlabel('Hour');
-        ylabel('%AR');
+        xlabel('Time(Hour)');
+        ylabel('Exposure(%AR)');
         title('%AR Total');
         legend show
         xlim([0 23]);
@@ -279,9 +281,9 @@ end
         plot(x1, AQMS_PM10_in_hour, 'g-', 'DisplayName', 'Tsuen Wan AQMS','LineWidth', 2);
         plot(x1, Outdoor_PM10_in_hour,'k-','DisplayName', 'PRAISE Outdoor','LineWidth', 2);
         hold off;
-        xlabel('Hour');
-        ylabel('%AR');
-        title('PM10 %AR Contribution');
+        xlabel('Time(Hour)');
+        ylabel('%AR(PM10)');
+        title('Contribution of PM10 to Total Exposure');
         % legend show;
         xlim([0 23]);
         
@@ -294,9 +296,9 @@ end
         plot(x1, AQMS_O3_in_hour, 'g-', 'DisplayName', 'Tsuen Wan AQMS','LineWidth', 2);
         plot(x1, Outdoor_O3_in_hour,'k-','DisplayName', 'PRAISE Outdoor','LineWidth', 2);
         hold off;
-        xlabel('Hour');
-        ylabel('%AR');
-        title('O3 %AR Contribution');
+        xlabel('Time(Hour)');
+        ylabel('%AR(O3)');
+        title('Contribution of O3 to Total Exposure (%AR)');
         % legend show;
         xlim([0 23]);
         
@@ -309,9 +311,9 @@ end
         plot(x1, AQMS_NO2_in_hour, 'g-', 'DisplayName', 'Kwun Tong AQMS','LineWidth', 2);
         plot(x1, Outdoor_NO2_in_hour,'k-','DisplayName', 'PRAISE Outdoor','LineWidth', 2);
         hold off;
-        xlabel('Hour');
-        ylabel('%AR');
-        title('NO2 %AR Contribution');
+        xlabel('Time(Hour)');
+        ylabel('%AR(NO2)');
+        title('Contribution of NO2 to Total Exposure (%AR)');
         % legend show;
         xlim([0 23]);
         
@@ -320,20 +322,28 @@ end
         
         hold off;
 
-disp('Total exposure in 58 days:');
-disp(Total_exposure);
-disp('Average daily exposure in 58 days:')
+disp('Average daily exposure:')
 Average_daily_exposure = Total_exposure/no_of_days;
 disp(Average_daily_exposure);
 
-disp('Total outdoor exposure in 58 days:');
-disp(Total_outdoor_exposure)
-disp('Average daily outdoor exposure in 58 days:')
+disp('Average daily outdoor exposure:')
 Average_daily_outdoor_exposure = Total_outdoor_exposure/no_of_days;
 disp(Average_daily_outdoor_exposure);
 
-% disp('Total AQMS exposure in 61 days:');
-% disp(Total_AQMS_exposure)
-% disp('Average daily AQMS exposure in 61 days:')
-% Average_daily_AQMS_exposure = Total_AQMS_exposure/no_of_days;
-% disp(Average_AQMS_outdoor_exposure);
+disp('Average daily exposure at #1 Home:')
+disp(total_IO_exposure(1)/no_of_days);
+
+disp('Average daily exposure at #2 Office:')
+disp(total_IO_exposure(3)/no_of_days);
+
+disp('Average daily exposure at #3 School:')
+disp(total_IO_exposure(2)/no_of_days);
+
+disp('Average daily exposure at #4 Outdoor:')
+disp(total_IO_exposure(6)/no_of_days);
+
+disp('Average daily exposure at #5 Other Indoor:')
+disp(total_IO_exposure(4)/no_of_days);
+
+disp('Average daily exposure at #6 Transport:')
+disp((total_IO_exposure(5)+total_IO_exposure(7)+total_IO_exposure(8))/no_of_days);
