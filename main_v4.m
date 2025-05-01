@@ -249,9 +249,9 @@ bar_chart = bar(x, transpose(IO_in_hour), "stacked");
 
 % Add legend for bar chart
 xticks(0:23);
-xlabel('Hour');
-ylabel('%AR');
-title('Daily Exposure Summary');
+xlabel('Time(Hour)');
+ylabel('Exposure(%AR)');
+title('Daily Exposure Report');
 colors = [
     0.8, 0.2, 0.2;  % Home
     0.25, 0.88, 0.82;  % School
@@ -312,9 +312,9 @@ plot(x1, PEKhome_hourly_exposure, 'Color', [0.678, 0.847, 0.902], 'LineStyle', '
 plot(x1, AQMS_hourly_exposure, 'g-', 'DisplayName', 'Kwun Tong AQMS','LineWidth', 2);
 plot(x1, Outdoor_in_hour,'k-','DisplayName', 'PRAISE Outdoor','LineWidth', 2);
 hold off;
-xlabel('Hour');
-ylabel('%AR');
-title('%AR Total');
+xlabel('Time(Hour)');
+ylabel('Exposure(%AR)');
+title('Total Exposure');
 legend show
 xlim([0 23]);
 
@@ -327,9 +327,9 @@ plot(x1, PEKhome_PM10_in_hour, 'Color', [0.678, 0.847, 0.902], 'LineStyle', '--'
 plot(x1, AQMS_PM10_in_hour, 'g-', 'DisplayName', 'Kwun Tong AQMS','LineWidth', 2);
 plot(x1, Outdoor_PM10_in_hour,'k-','DisplayName', 'PRAISE Outdoor','LineWidth', 2);
 hold off;
-xlabel('Hour');
-ylabel('%AR');
-title('PM10 %AR Contribution');
+xlabel('Time(Hour)');
+ylabel('%AR(PM10)');
+title('Contribution of PM10 to Total Exposure');
 % legend show;
 xlim([0 23]);
 
@@ -342,9 +342,9 @@ plot(x1, PEKhome_O3_in_hour, 'Color', [0.678, 0.847, 0.902], 'LineStyle', '--', 
 plot(x1, AQMS_O3_in_hour, 'g-', 'DisplayName', 'Kwun Tong AQMS','LineWidth', 2);
 plot(x1, Outdoor_O3_in_hour,'k-','DisplayName', 'PRAISE Outdoor','LineWidth', 2);
 hold off;
-xlabel('Hour');
-ylabel('%AR');
-title('O3 %AR Contribution');
+xlabel('Time(Hour)');
+ylabel('%AR(O3)');
+title('Contribution of O3 to Total Exposure');
 % legend show;
 xlim([0 23]);
 
@@ -357,9 +357,9 @@ plot(x1, PEKhome_NO2_in_hour, 'Color', [0.678, 0.847, 0.902], 'LineStyle', '--',
 plot(x1, AQMS_NO2_in_hour, 'g-', 'DisplayName', 'Kwun Tong AQMS','LineWidth', 2);
 plot(x1, Outdoor_NO2_in_hour,'k-','DisplayName', 'PRAISE Outdoor','LineWidth', 2);
 hold off;
-xlabel('Hour');
-ylabel('%AR');
-title('NO2 %AR Contribution');
+xlabel('Time(Hour)');
+ylabel('%AR(NO2)');
+title('Contribution of NO2 to Total Exposure');
 % legend show;
 xlim([0 23]);
 
