@@ -198,21 +198,27 @@ for i = minRow:maxRow
     exposure_outdoor = conc_to_AR_outdoor * duration;
 
     %Praise AR for each polllutant
-    beta_NO2 = 0.0004462559;
-    beta_O3 = 0.0005116328;
-    beta_PM10 = 0.0002821751;
-    AR_NO2 = exp(beta_NO2*conc_NO2)-1;
-    AR_O3 = exp(beta_O3*conc_O3)-1;
-    AR_PM10 = exp(beta_PM10*conc_PM10)-1;
     % exposure_PM25 = AR_PM25 * factor(2) * duration;
-    exposure_PM10 = AR_PM10 * factor(1) * duration*100;
-    exposure_O3 = AR_O3 * factor(4) * duration*100;
-    exposure_NO2 = AR_NO2 * factor(3) * duration*100;
+    exposure_PM10 = f_conc_PM10(conc_NO2, conc_PM10, conc_PM2_5, conc_O3, ...
+    conc_SO2,factor(:,ME_Variable(1),ME_Variable(2),ME_Variable(3),IO)) *duration;
+
+    exposure_O3 = f_conc_O3(conc_NO2, conc_PM10, conc_PM2_5, conc_O3, ...
+    conc_SO2,factor(:,ME_Variable(1),ME_Variable(2),ME_Variable(3),IO)) *duration;
+
+    % conc_to_AR = f_conc(conc_NO2, conc_PM10, conc_PM2_5, conc_O3, conc_SO2, ...
+    %     factor(:,ME_Variable(1),ME_Variable(2),ME_Variable(3),IO));
+    exposure_NO2 = f_conc_NO2(conc_NO2, conc_PM10, conc_PM2_5, conc_O3, ...
+    conc_SO2,factor(:,ME_Variable(1),ME_Variable(2),ME_Variable(3),IO)) *duration;
 
     %Praise Outdoor AR for each pollutant
-    outdoor_exposure_PM10 = AR_PM10 * duration*100;
-    outdoor_exposure_O3 = AR_O3 * duration*100;
-    outdoor_exposure_NO2 = AR_NO2 * duration*100;
+    outdoor_exposure_PM10 = f_conc_PM10(conc_NO2, conc_PM10, conc_PM2_5, conc_O3, ...
+    conc_SO2,factor(:,ME_Variable(1),ME_Variable(2),ME_Variable(3),6)) * duration;
+
+    outdoor_exposure_O3 = f_conc_O3(conc_NO2, conc_PM10, conc_PM2_5, conc_O3, ...
+    conc_SO2,factor(:,ME_Variable(1),ME_Variable(2),ME_Variable(3),6)) * duration;
+
+    outdoor_exposure_NO2 = f_conc_NO2(conc_NO2, conc_PM10, conc_PM2_5, conc_O3, ...
+    conc_SO2,factor(:,ME_Variable(1),ME_Variable(2),ME_Variable(3),6)) *duration;
 
 % Calculate total exposure of each IO
     %Praise
