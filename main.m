@@ -2,31 +2,32 @@
 % Last updated: Thursday 1 May 2025 (Happy Holiday!)
 
 % Set up t-test
-N=24; % Number of data points
+x=5; % Number of PEKs
+N=89; % Number of data points
 df=N-2;
 alpha=0.05;
 critical_t = tinv(1 - alpha/2, N);
 disp('The level of confidence of this test is 95%');
 
 % Initialize tables
-fileName = 'IAQs.xlsx';
+fileName = 'PEKs.xlsx';
 % Get the names of all sheets in the Excel file
 [~, sheetNames] = xlsfinfo(fileName);
-AQMS = readtable("MKAQMS.csv");
+AQMS = readtable("KTAQMS.csv");
 
 % Initialize variables
-PEK_conc_PM25 = zeros(N,6);
-PEK_conc_PM10 = zeros(N,6);
-PEK_conc_NO2 = zeros(N,6);
-PEK_conc_O3 = zeros(N,6);
-r_PM25 = zeros(6,1);
-r_PM10 = zeros(6,1);
-r_NO2 = zeros(6,1);
-r_O3 = zeros(6,1);
-t_PM25 = zeros(6,1);
-t_PM10 = zeros(6,1);
-t_NO2 = zeros(6,1);
-t_O3 = zeros(6,1);
+PEK_conc_PM25 = zeros(N,x);
+PEK_conc_PM10 = zeros(N,x);
+PEK_conc_NO2 = zeros(N,x);
+PEK_conc_O3 = zeros(N,x);
+r_PM25 = zeros(x,1);
+r_PM10 = zeros(x,1);
+r_NO2 = zeros(x,1);
+r_O3 = zeros(x,1);
+t_PM25 = zeros(x,1);
+t_PM10 = zeros(x,1);
+t_NO2 = zeros(x,1);
+t_O3 = zeros(x,1);
 coeff_PM25 = zeros(2, length(sheetNames));  % [slope; intercept]
 coeff_PM10 = zeros(2, length(sheetNames));
 coeff_NO2 = zeros(2, length(sheetNames));
@@ -48,10 +49,10 @@ for i = 1:length(sheetNames)
     r_NO2(i) = corr(PEK_conc_NO2(:, i), AQMS.NO2);
     r_O3(i) = corr(PEK_conc_O3(:, i), AQMS.O3);
     % Perform linear regression for each pollutant
-    coeff_PM25(:, i) = polyfit(AQMS.PM25, PEK_conc_PM25(:, i), 1);
-    coeff_PM10(:, i) = polyfit(AQMS.PM10, PEK_conc_PM10(:, i), 1);
-    coeff_NO2(:, i) = polyfit(AQMS.NO2, PEK_conc_NO2(:, i), 1);
-    coeff_O3(:, i) = polyfit(AQMS.O3, PEK_conc_O3(:, i), 1);
+    coeff_PM25(:, i) = polyfit(PEK_conc_PM25(:, i), AQMS.PM25,1);
+    coeff_PM10(:, i) = polyfit(PEK_conc_PM10(:, i), AQMS.PM10,1);
+    coeff_NO2(:, i) = polyfit(PEK_conc_NO2(:, i), AQMS.NO2,1);
+    coeff_O3(:, i) = polyfit(PEK_conc_O3(:, i), AQMS.O3, 1);
     % Calculate t
     t_PM25(i) = r_PM25(i)*sqrt(N-2)/sqrt(1-r_PM25(i)^2);
     t_PM10(i) = r_PM10(i)*sqrt(N-2)/sqrt(1-r_PM10(i)^2);
